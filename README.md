@@ -162,7 +162,7 @@ This project is for educational purposes and follows the MIT License.
 
 ## 👨‍💻 Author
 
-**Manju Chollangi**
+**Basa Sindhu Latha**
 GitHub: [https://github.com/basasindhu04](https://github.com/basasindhu04)
 
 ---
