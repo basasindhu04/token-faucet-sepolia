@@ -5,7 +5,6 @@ describe("Token Faucet", function () {
   let token, faucet;
   let owner, user;
 
-  const MAX_SUPPLY = ethers.parseEther("1000000");
   const FAUCET_AMOUNT = ethers.parseEther("100");
   const DAY = 24 * 60 * 60;
 
@@ -13,7 +12,7 @@ describe("Token Faucet", function () {
     [owner, user] = await ethers.getSigners();
 
     const Token = await ethers.getContractFactory("Token");
-    token = await Token.deploy("MyToken", "MTK", MAX_SUPPLY);
+    token = await Token.deploy();
     await token.waitForDeployment();
 
     const Faucet = await ethers.getContractFactory("TokenFaucet");
@@ -72,9 +71,8 @@ describe("Token Faucet", function () {
   });
 
   it("Non-admin cannot pause faucet", async function () {
-  await expect(
-    faucet.connect(user).setPaused(true)
-  ).to.be.reverted;
-});
-
+    await expect(
+      faucet.connect(user).setPaused(true)
+    ).to.be.reverted;
+  });
 });
