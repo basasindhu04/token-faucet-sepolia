@@ -2,39 +2,22 @@ const hre = require("hardhat");
 
 async function main() {
   const [deployer] = await hre.ethers.getSigners();
+  console.log("Deploying with account:", deployer.address);
 
-  console.log("Deploying contracts with account:", deployer.address);
-
-  const balance = await hre.ethers.provider.getBalance(deployer.address);
-  console.log("Account balance:", balance.toString());
-
-  // 1️⃣ Deploy Token (WITH constructor arguments)
   const Token = await hre.ethers.getContractFactory("Token");
-  const token = await Token.deploy(
-    "Faucet Token",
-    "FTK",
-    hre.ethers.parseEther("1000000")
-  );
+  const token = await Token.deploy();
   await token.waitForDeployment();
+  const tokenAddress = await token.getAddress();
+  console.log("Token deployed to:", tokenAddress);
 
-  console.log("✅ Token deployed to:", token.target);
-
-  // 2️⃣ Deploy Faucet
   const Faucet = await hre.ethers.getContractFactory("TokenFaucet");
-  const faucet = await Faucet.deploy(token.target);
+  const faucet = await Faucet.deploy(tokenAddress);
   await faucet.waitForDeployment();
+  const faucetAddress = await faucet.getAddress();
+  console.log("Faucet deployed to:", faucetAddress);
 
-  console.log("✅ Faucet deployed to:", faucet.target);
-
-  // 3️⃣ Set faucet as minter
-  const tx = await token.setFaucet(faucet.target);
-  await tx.wait();
-
-  console.log("✅ Faucet granted mint permission");
-
-  console.log("\n🎯 DEPLOYMENT COMPLETE");
-  console.log("Token Address:", token.target);
-  console.log("Faucet Address:", faucet.target);
+  await token.setFaucet(faucetAddress);
+  console.log("Faucet granted mint permission");
 }
 
 main()
