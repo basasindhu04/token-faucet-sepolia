@@ -8,15 +8,9 @@ contract Token is ERC20, Ownable {
     uint256 public immutable MAX_SUPPLY;
     address public faucet;
 
-    constructor(
-        string memory name_,
-        string memory symbol_,
-        uint256 maxSupply_
-    )
-        ERC20(name_, symbol_)
-        Ownable(msg.sender)
-    {
-        MAX_SUPPLY = maxSupply_;
+    constructor() ERC20("Faucet Token", "FTK") Ownable(msg.sender) {
+        MAX_SUPPLY = 1_000_000 * 10 ** decimals();
+        _mint(msg.sender, MAX_SUPPLY);
     }
 
     function setFaucet(address _faucet) external onlyOwner {
