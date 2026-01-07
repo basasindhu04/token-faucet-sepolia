@@ -34,17 +34,28 @@ This repository contains an ERC20 token and a token faucet smart contract built 
 ## 📂 Project Structure
 
 ```
-contracts/          # Solidity smart contracts
-  ├── Token.sol
-  └── TokenFaucet.sol
-scripts/            # Deployment scripts
-  └── deploy.js
-test/               # Hardhat test files
-  └── TokenFaucet.test.js
-hardhat.config.js   # Hardhat configuration
-package.json        # Project dependencies
-.gitignore          # Ignored files
-README.md           # Project documentation
+token-faucet-sepolia/
+│
+├── contracts/
+│   ├── Token.sol
+│   └── TokenFaucet.sol
+│
+├── scripts/
+│   └── deploy.js
+│
+├── test/
+│   └── TokenFaucet.test.js
+│
+├── frontend/
+│   ├── index.html
+│   └── app.js
+│
+├── docker-compose.yml
+├── hardhat.config.js
+├── package.json
+├── package-lock.json
+├── README.md
+├── .gitignore
 ```
 
 ---
@@ -68,6 +79,20 @@ ETHERSCAN_API_KEY=your_etherscan_api_key
 ```
 
 ⚠️ **Never commit the `.env` file to GitHub**
+
+---
+
+## 🧠 Start Local Hardhat Node
+
+```bash
+npx hardhat node
+```
+
+Local RPC URL:
+
+```
+http://127.0.0.1:8545
+```
 
 ---
 
@@ -124,39 +149,67 @@ Deployment output includes:
 
 [https://sepolia.etherscan.io/address/0xEb38b0DA0B7379F5b9d614F93A05Cf1cdc47C199](https://sepolia.etherscan.io/address/0xEb38b0DA0B7379F5b9d614F93A05Cf1cdc47C199)
 
-Both contracts are fully verified and include Read/Write interfaces.
+---
+
+## 🌐 Frontend Usage
+
+Open browser:
+
+```
+http://localhost:3000
+```
+
+Steps:
+
+1. Click **Connect Wallet**
+2. Switch MetaMask network to **Hardhat Localhost** or **Sepolia**
+3. Click **Claim Tokens**
+4. Confirm the transaction in MetaMask
+
+---
+
+## 🐳 Docker Deployment
+
+```bash
+docker compose up --build
+```
+
+| Service      | Port |
+| ------------ | ---- |
+| Hardhat Node | 8545 |
+| Frontend UI  | 3000 |
+
+---
+
+## 📦 Docker Architecture
+
+| Container | Role                                    |
+| --------- | --------------------------------------- |
+| hardhat   | Smart contract compilation & deployment |
+| frontend  | Faucet web UI                           |
+| network   | Bridge between services                 |
 
 ---
 
 ## 🔐 Security Considerations
 
-* Access control enforced via `Ownable`
+* Access control via `Ownable`
 * Cooldown and lifetime limits prevent abuse
-* Solidity 0.8+ prevents overflow/underflow
-* Checks-effects-interactions pattern followed
-* Only admin can pause/unpause faucet
+* Solidity 0.8+ prevents overflows
+* Checks-effects-interactions pattern
 
 ---
 
 ## 📌 Network Information
 
-* **Network:** Ethereum Sepolia Testnet
-* **Chain ID:** 11155111
+* Network: Ethereum Sepolia Testnet
+* Chain ID: 11155111
 
 ---
 
 ## 📄 License
 
-This project is for educational purposes and follows the MIT License.
-
----
-
-## ✅ Status
-
-✔ Contracts Deployed
-✔ Tests Passing
-✔ Contracts Verified on Etherscan
-✔ GitHub Repository Ready
+MIT License
 
 ---
 
@@ -165,6 +218,5 @@ This project is for educational purposes and follows the MIT License.
 **Basa Sindhu Latha**
 GitHub: [https://github.com/basasindhu04](https://github.com/basasindhu04)
 
----
 
 ⭐ If you found this project helpful, feel free to star the repository!
